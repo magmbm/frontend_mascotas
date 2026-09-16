@@ -10,6 +10,7 @@ export interface Mascota {
     edad: number;
     vacunado: boolean;
     especie: string;
+    sexo : string;
 }
 
 interface TablaMascotasProps {
@@ -56,6 +57,7 @@ export const GestorMascotas: React.FC = ({}) => {
 
             if (response.status== 200) {
                 setEliminar(!eliminar);
+                alert("Mascota Eliminado con éxito");
             }
         } catch (error : any) {
             alert("No se pudo eliminar el registro")

@@ -187,3 +187,23 @@ ul {
   border: none;
   background-color: transparent;
 }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales por fila */
+  gap: 20px; /* Espaciado entre las cards */
+  width: 100%;
+}
+
+/* Responsivo para celulares y tablets */
+@media (max-width: 900px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

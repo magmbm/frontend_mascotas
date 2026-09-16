@@ -6,6 +6,7 @@ import {  useNavigate, Route, Routes } from 'react-router';
 import { CarnetMascota } from './paginas/CarnetMascota';
 import { RegistroMascota } from './paginas/RegistroMascota';
 import { GestorMascotas } from './paginas/GestorMascotas';
+import { API_URL } from './config/Api';
 
 interface TarjetaProps {
   imagen?: string;
@@ -16,34 +17,18 @@ interface TarjetaProps {
   onVerDetalles?: () => void;
 }
 
-
-export const TarjetaMascota: React.FC<TarjetaProps> = ({
-  imagen,
+export const MascotaCard = ({
   nombre,
   especie,
   edad,
   vacunado,
-  onVerDetalles,
-}) => {
-  /*
-  */
-  const navigate= useNavigate();
-  const handleVerDetalles = () => {
-    // Navegamos a la ruta /carnet pasando los datos de la mascota en el state
-    navigate('/carnet', {
-      state: {
-        nombre,
-        especieRaza: `${especie} • Dachshund`,
-        edad,
-        fotoUrl: imagen,
-        vacunado,
-      },
-    });
-  };
+  imagen,
+  onVerDetalles
+}: TarjetaProps) => {
   return (
     <div className="card">
-      {imagen && <img src={imagen} alt={nombre} className="card-img" />}
-      
+      {perro_bienvenida && <img src={perro_bienvenida} alt={nombre} className="card-img" />}
+
       <div className="card-body">
         <div className="card-header">
           <h3 className="card-title">{nombre}</h3>
@@ -59,7 +44,7 @@ export const TarjetaMascota: React.FC<TarjetaProps> = ({
         </p>
 
         {onVerDetalles && (
-          <button className="card-btn" onClick={handleVerDetalles}>
+          <button className="card-btn" onClick={onVerDetalles}>
             Ver detalles
           </button>
         )}
@@ -67,6 +52,59 @@ export const TarjetaMascota: React.FC<TarjetaProps> = ({
     </div>
   );
 };
+
+export const TarjetaMascota=  ({
+}) => {
+  const navigate= useNavigate();
+  const [cargando, setCargando]= useState(false);
+  const [mascotas, setMascotas]= useState([]);
+  const auth= useAuth();
+
+  const getMascota= async ()=> {
+    try {
+      const token= auth.user?.access_token;
+      const response= await fetch(`${API_URL}/api/mascotas/listar`, {
+        method : "GET",
+        headers : {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      
+      if (response.ok) {
+        const data= await response.json();
+        console.log(data);
+        setMascotas(data);
+      }
+
+    } catch (error : any) {
+      console.log("Error get mascota");
+      console.log(error);
+    } setCargando(false);
+  }
+
+  useEffect(()=> {
+    getMascota()
+  }, [cargando])
+
+  return (
+    <div className="cards-grid">
+      {mascotas.map((m) => (
+        <MascotaCard
+          key={m.id}
+          nombre={m.nombre}
+          especie={m.especie}
+          edad={m.edad}
+          vacunado={m.vacunado}
+          imagen={perro_bienvenida}
+          onVerDetalles={() => navigate('/carnet', { state: { id: m.id } })}
+        />
+      ))}
+    </div>
+  )
+
+}
+
 
 const Inicio: React.FC = () => {
   const auth= useAuth();
@@ -80,12 +118,6 @@ const Inicio: React.FC = () => {
       </p>
       <div className='tarjetaCont'>
         <TarjetaMascota
-          nombre="Firulais"
-          especie="Perro"
-          edad={3}
-          vacunado={true}
-          imagen={perro_bienvenida}
-          onVerDetalles={()=> console.log()}
           />
       </div>
     </div>
@@ -96,6 +128,7 @@ const Inicio: React.FC = () => {
 function App() {
   const navigate = useNavigate();
   const auth = useAuth();
+  const roles = (auth.user?.profile["cognito:groups"] as string[]) || [];
 
   const handleCerrarSesion = async ()  => {
     await auth.signoutRedirect();
@@ -128,7 +161,9 @@ function App() {
     auth.signinRedirect();
   }
   */
-
+    const tieneAlgunRol = (rolesRequeridos: string[]) => {
+      return rolesRequeridos.some((rol) => roles.includes(rol));
+    };
 
   if (auth.isAuthenticated) {
     console.log("Access Token");
@@ -146,8 +181,14 @@ function App() {
         </div>
         <div className="navbar">
           <ul>
-            <button className='btn' onClick={()=> navigate('/mascota/registrar')}>Agregar Mascota</button>
-            <button className='btn' onClick={()=> navigate('/mascota/crud')}>Gestor de Mascotas</button>
+
+            <button className='btn' onClick={()=> navigate('/')}>Home</button>
+            {tieneAlgunRol(['Admin', 'Vet']) && (
+              <>
+              <button className='btn' onClick={()=> navigate('/mascota/registrar')}>Agregar Mascota</button>
+              <button className='btn' onClick={()=> navigate('/mascota/crud')}>Gestor de Mascotas</button>
+              </>
+            )} 
           </ul>
         </div>
         <div className="ticks"></div>
