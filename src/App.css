@@ -1,0 +1,189 @@
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.header {
+  background-color: green;
+  padding: 2em 1.5em;
+  position: relative;       /* Permite posicionar elementos absolutos dentro del header */
+  display: flex;
+  justify-content: center;  /* Centra el título en todo el ancho del contenedor */
+  align-items: center;
+}
+
+
+.tituloPagina {
+  color: #FFFFFF;
+  margin: 0;                 /* Elimina los márgenes por defecto del <h1> */
+  font-weight: bold;
+  /*word-spacing: 5cm;*/
+  font-size: 2em;
+}
+
+
+.btnCerrarSesion {
+  position: absolute;       /* Saca el botón del flujo normal */
+  right: 1.5em;             /* Lo fija a la esquina derecha */
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnCerrarSesion:hover {
+  background-color: #c9302c;  /* Efecto al pasar el mouse */
+}
+
+.navbar {
+  background-color: lightgray;
+  border-radius: 0em 0em 3em 3em;
+  padding: 0.2em 0;
+}
+
+ul {
+  margin: 0.6em;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.btn {
+  border-radius: 8px;
+  background-color: white;
+  padding: 0.5em 1em;
+  border: none;
+  margin-left: 1em;
+  margin-right: 1em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: grey;
+}
+
+
+.perroBienvenida {
+  height: 14em;
+  width: 12em;
+}
+
+
+
+
+.tituloPagina {
+  color: #FFFF;
+}
+
+.card {
+  width: 20em;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: scale-down;
+}
+
+.card-body {
+  padding: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25em;
+  color: #1f2937;
+}
+
+.card-info {
+  margin: 0;
+  font-size: 0.9em;
+  color: #4b5563;
+}
+
+.badge {
+  font-size: 0.75em;
+  padding: 0.3em 0.6em;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.badge-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.badge-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.card-btn {
+  margin-top: 0.5em;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6em 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.card-btn:hover {
+  background-color: #006400;
+}
+
+.tarjetaCont {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+  display: flex;
+  justify-content: center;
+}
+
+.botonTitulo {
+  border: none;
+  background-color: transparent;
+}
