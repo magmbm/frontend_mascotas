@@ -10,6 +10,8 @@ export const RegistroMascota: React.FC = () => {
     const [edad, setEdad] = useState("");
     const [especie, setEspecie] = useState("Perro");
     const [vacunado, setVacunado] = useState(false);
+    const [peso, setPeso] = useState<number>(0.0);
+    const [sexo, setSexo] = useState("M");
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
 
@@ -18,9 +20,9 @@ export const RegistroMascota: React.FC = () => {
         e.preventDefault();
         const token= auth.user?.access_token;
 
-        if (!nombre.trim() || !especie.trim() || !edad.trim()) {
-        alert("Por favor completa todos los campos.");
-        return;
+        if (!nombre.trim() || !especie.trim() || !edad.trim() || peso== 0.0 || !sexo.trim()) {
+          alert("Por favor completa todos los campos.");
+          return;
         }
 
         const nuevaMascota = {
@@ -28,6 +30,8 @@ export const RegistroMascota: React.FC = () => {
             edad: parseInt(edad, 10),
             especie: especie.trim(),
             vacunado: vacunado,
+            peso: peso, 
+            sexo: sexo
         };
         
         try {
@@ -44,7 +48,8 @@ export const RegistroMascota: React.FC = () => {
                 alert("¡Mascota registrada con éxito!");
                 navigate("/");
             } else {
-                alert("Ocurrió un error al registrar la mascota.");
+              console.log(response.status);
+              alert("Ocurrió un error al registrar la mascota.");
             } 
         }catch (error : any) {
             alert("");
@@ -110,6 +115,35 @@ export const RegistroMascota: React.FC = () => {
             onChange={(e)=> setEdad(e.target.value)}
             required
           />
+        </div>
+
+        {/* Campo: Peso */}
+        <div className="form-card">
+          <label htmlFor="peso">Peso</label>
+          <input
+            type="number"
+            id="peso"
+            name="peso"
+            placeholder="3.3"
+            min="0.0"
+            value={peso}
+            onChange={(e)=> setPeso(e.target.valueAsNumber)}
+            required
+          />
+        </div>
+
+        {/* Campo: Especie (Dropdown) */}
+        <div className="form-card">
+          <label htmlFor="especie">Sexo</label>
+          <select
+            id="sexo"
+            name="sexo"
+            value={sexo}
+            onChange={(e)=> setSexo(e.target.value)}
+          >
+            <option value="M">Macho</option>
+            <option value="H">Hembra</option>
+          </select>
         </div>
 
         {/* Campo: Vacunado (Radio Buttons) */}

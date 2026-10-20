@@ -32,6 +32,8 @@ export const GestorMascotas: React.FC = ({}) => {
                     Authorization: `Bearer ${token}`,
                 }
             })
+            console.log(response);
+            console.log(token);
             const data= await response.json();
             setMascotas(data);
         } catch (error : any) {

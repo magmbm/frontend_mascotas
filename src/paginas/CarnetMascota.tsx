@@ -30,7 +30,7 @@ export const CarnetMascota: any = ({
 
     try {
       const token= auth.user?.access_token;
-      const response= await fetch(`${API_URL}/api/mascotas/ver/${id}`, {
+      const response= await fetch(`${API_URL}/api/mascotas/listar/${id}`, {
         method : "GET",
         headers : {
           "Content-Type": "application/json",

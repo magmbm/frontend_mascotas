@@ -4,6 +4,7 @@ import './App.css'
 import { useAuth } from "react-oidc-context";
 import {  useNavigate, Route, Routes } from 'react-router';
 import { CarnetMascota } from './paginas/CarnetMascota';
+import { AgendarCitas } from './paginas/Citas';
 import { RegistroMascota } from './paginas/RegistroMascota';
 import { GestorMascotas } from './paginas/GestorMascotas';
 import { API_URL } from './config/Api';
@@ -53,6 +54,7 @@ export const MascotaCard = ({
   );
 };
 
+
 export const TarjetaMascota=  ({
 }) => {
   const navigate= useNavigate();
@@ -73,6 +75,7 @@ export const TarjetaMascota=  ({
       
       if (response.ok) {
         const data= await response.json();
+        console.log("Inicio");
         console.log(data);
         setMascotas(data);
       }
@@ -128,7 +131,25 @@ const Inicio: React.FC = () => {
 function App() {
   const navigate = useNavigate();
   const auth = useAuth();
+  const token= auth.user?.access_token;
   const roles = (auth.user?.profile["cognito:groups"] as string[]) || [];
+
+  const lambda_test= async ()=> {
+    try {
+      const response= await fetch(`${API_URL}/api/mascotas/lambda`, {
+        method : "GET",
+        headers : {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        }
+      })
+      const data= await response.json();
+      console.log(data);
+      console.log("Lambda");
+    } catch (err : any) {
+      console.log(err);
+    }
+  } 
 
   const handleCerrarSesion = async ()  => {
     await auth.signoutRedirect();
@@ -189,8 +210,12 @@ function App() {
               <button className='btn' onClick={()=> navigate('/mascota/crud')}>Gestor de Mascotas</button>
               </>
             )} 
+            {tieneAlgunRol(['Admin', 'Owner']) && (
+            <button className='btn' onClick={()=> navigate('/cita/agendar')}>Agendar Cita</button>
+            )}
           </ul>
         </div>
+        <button onClick={lambda_test}>Polo</button>
         <div className="ticks"></div>
         <div className='tarjetaCont'>
           </div>
@@ -199,6 +224,7 @@ function App() {
           <Route path="/carnet" element={<CarnetMascota />} />
           <Route path="/mascota/registrar" element={<RegistroMascota />}/>
           <Route path="/mascota/crud" element={<GestorMascotas />}/>
+          <Route path="/cita/agendar" element={<AgendarCitas />}/>
         </Routes>
         </>
     )
