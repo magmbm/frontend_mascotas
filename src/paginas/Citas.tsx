@@ -31,15 +31,17 @@ export const AgendarCitas: React.FC = () => {
         <div className="form-citas-header">
             <h2 className="form-titulo">Cuentanos de tu mascota</h2>
             <div className="btn-mascotas-cont">
-                <button className="btn btn-mascotas shadow ">Perro</button>
-                <button className="btn btn-mascotas shadow ">Gato</button>
-                <button className="btn btn-mascotas shadow ">Hamster</button>
+                <button className="btn btn-mascotas shadow" id="btn-mascotas-left">Perro</button>
+                <button className="btn btn-mascotas shadow" id="btn-mascotas-center">Gato</button>
+                <button className="btn btn-mascotas shadow" id="btn-mascotas-right">Hamster</button>
             </div>
+            <p className="form-label label-nombre-mascota">Nombre de tu mascota</p>
+            <input type="text" id="nombre-mascota-input" className="form-control"></input>
         </div>
         <div className="motivo-titulo">
-            <h4>¿Cómo te podemos ayudar?</h4>
+            <p id="titulo-lista">¿Cómo te podemos ayudar?</p>
         </div>
-        <div>
+        <div className='list-cont'>
 
             <ul className="lista-motivos">
                 <li><button className="btn btn-lista-motivos shadow"

@@ -6,6 +6,7 @@
     padding-left: 1.5em;
     padding-right: 1.5em;
     width: 80%;
+    padding-bottom: 2em;
 }
 
 .form-titulo {
@@ -20,6 +21,16 @@
     justify-content: center;
 }
 
+.label-nombre-mascota {
+    margin-top: 1em;
+    text-align: left;
+    font-weight: 600;
+}
+
+#nombre-mascota-input {
+    font-size: 1.3em;
+}
+
 .btn-mascotas-cont {
     display: flex;
     justify-content: space-evenly;
@@ -28,13 +39,21 @@
 
 .btn-mascotas {
     background-color: white !important;
-    padding-left: 5em !important;
+    padding-left:  5em !important;
     padding-right: 5em !important;
     width: 24em;
-    padding-bottom: 1em !important;
-    padding-top: 1em !important;
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
+    padding-bottom: 1.3em !important;
+    padding-top:    1.3em !important;
+    margin-bottom:  0.5em;
+    margin-top:  0.5em;
+}
+
+#btn-mascotas-left {
+    margin-left: 0;
+}
+
+#btn-mascotas-right {
+    margin-right: 0;
 }
 
 .motivo-titulo {
@@ -44,18 +63,31 @@
     
 }
 
+.list-cont {
+    height: 17em;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    background-color: white;
+    padding-bottom: 0.5em;
+    padding-top:    0.5em;
+    background-color: lightgray;
+    border-radius: 10px;
+}
+
+#titulo-lista {
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
 .lista-motivos {
     display: flex;
     flex-direction: column;
     align-content: center;
-    background-color: lightgray;
-    width: 100%;
-    border-radius: 10px;
     padding: 0;
 }
 
 .lista-motivos li {
-    width: 100%;
     margin-bottom: 0.5em;
     margin-top: 0.5em;
     height: 3em;
