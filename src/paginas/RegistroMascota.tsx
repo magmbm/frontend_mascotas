@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../config/Api';
 import { useAuth } from 'react-oidc-context';
+import { campoFaltante, camposPorRellenar, registroFallidoMascota } from '../utils/MensajesError';
 
 export const RegistroMascota: React.FC = () => {
     const auth= useAuth();
@@ -21,7 +22,7 @@ export const RegistroMascota: React.FC = () => {
         const token= auth.user?.access_token;
 
         if (!nombre.trim() || !especie.trim() || !edad.trim() || peso== 0.0 || !sexo.trim()) {
-          alert("Por favor completa todos los campos.");
+          alert(camposPorRellenar);
           return;
         }
 
@@ -49,7 +50,7 @@ export const RegistroMascota: React.FC = () => {
                 navigate("/");
             } else {
               console.log(response.status);
-              alert("Ocurrió un error al registrar la mascota.");
+              alert(registroFallidoMascota);
             } 
         }catch (error : any) {
             alert("");

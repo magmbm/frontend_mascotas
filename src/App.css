@@ -195,6 +195,10 @@ ul {
   width: 100%;
 }
 
+#root {
+  border: 0px;
+}
+
 /* Responsivo para celulares y tablets */
 @media (max-width: 900px) {
   .cards-grid {

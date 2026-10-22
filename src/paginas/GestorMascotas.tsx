@@ -47,9 +47,10 @@ export const GestorMascotas: React.FC = ({}) => {
         listarMascotas();
     }, [eliminar]);
 
-    const eliminarMascota= async (id : any)=> {
+    const eliminarMascota= async (id : string | number)=> {
         try {
             const token= auth.user?.access_token;
+            
             const response= await fetch(`${API_URL}/api/mascotas/eliminar/${id}`, {
                 method : "DELETE",
                 headers : {

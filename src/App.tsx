@@ -215,7 +215,6 @@ function App() {
             )}
           </ul>
         </div>
-        <button onClick={lambda_test}>Polo</button>
         <div className="ticks"></div>
         <div className='tarjetaCont'>
           </div>
