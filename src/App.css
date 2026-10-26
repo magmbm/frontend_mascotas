@@ -53,18 +53,25 @@
   background-color: #c9302c;  /* Efecto al pasar el mouse */
 }
 
-.navbar {
+.navbar-mascotas {
   background-color: lightgray;
   border-radius: 0em 0em 3em 3em;
   padding: 0.2em 0;
-}
-
-ul {
-  margin: 0.6em;
-  padding: 0;
   display: flex;
   justify-content: center;
-  list-style: none;
+  align-items: center;
+}
+
+.lista-navbar {
+  margin: 0px;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.btn-navbar {
+  background-color: #FFFF !important;
+  padding-bottom: 0.5em !important;
+  padding-top: 0.5em !important;
 }
 
 .btn {
@@ -127,7 +134,7 @@ ul {
 
 .card-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -148,6 +155,8 @@ ul {
   padding: 0.3em 0.6em;
   border-radius: 12px;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
 }
 
 .badge-success {

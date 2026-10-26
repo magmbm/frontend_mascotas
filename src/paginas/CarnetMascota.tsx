@@ -3,8 +3,9 @@ import "./CarnetMascota.css";
 import { useLocation } from 'react-router-dom';
 import { API_URL } from "../config/Api";
 import { useEffect, useState } from "react";
-import type { Mascota } from "./GestorMascotas";
+
 import perro_bienvenida  from '../assets/perro.png'
+import type { Mascota } from "../utils/types";
 
 interface CarnetProps {
   nombre: string;
@@ -78,14 +79,14 @@ export const CarnetMascota: any = ({
           <img src={perro_bienvenida} alt={""} className="pet-avatar" />
         </div>
         
-        <h2 className="pet-name">{mascota.nombre}</h2>
+        <h2 className="pet-name">{mascota.nombre_mascota}</h2>
 
       </div>
       {/* Columna Derecha: Tarjetas de Información 2x2 */}
       <div className="carnet-grid">
         <div className="info-card">
           <h3>Edad</h3>
-          <p>{mascota.edad}</p>
+          <p>{mascota.edad_mascota}</p>
         </div>
 
         <div className="info-card">
@@ -101,6 +102,10 @@ export const CarnetMascota: any = ({
         <div className="info-card">
           <h3>Sexo</h3>
           <p>{mascota.sexo}</p>
+        </div>
+        <div className="info-card">
+          <h3>Peso</h3>
+          <p>{mascota.peso_mascota} kg</p>
         </div>
       </div>
     </div>

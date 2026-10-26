@@ -7,7 +7,9 @@ import { CarnetMascota } from './paginas/CarnetMascota';
 import { AgendarCitas } from './paginas/Citas';
 import { RegistroMascota } from './paginas/RegistroMascota';
 import { GestorMascotas } from './paginas/GestorMascotas';
+import { GestorUsuarios } from './paginas/GestorUsuarios';
 import { API_URL } from './config/Api';
+import type { Mascota } from './utils/types';
 
 interface TarjetaProps {
   imagen?: string;
@@ -59,7 +61,7 @@ export const TarjetaMascota=  ({
 }) => {
   const navigate= useNavigate();
   const [cargando, setCargando]= useState(false);
-  const [mascotas, setMascotas]= useState([]);
+  const [mascotas, setMascotas]= useState<Mascota[]>([]);
   const auth= useAuth();
 
   const getMascota= async ()=> {
@@ -94,13 +96,13 @@ export const TarjetaMascota=  ({
     <div className="cards-grid">
       {mascotas.map((m) => (
         <MascotaCard
-          key={m.id}
-          nombre={m.nombre}
+          key={m.id_mascota}
+          nombre={m.nombre_mascota}
           especie={m.especie}
-          edad={m.edad}
+          edad={m.edad_mascota}
           vacunado={m.vacunado}
           imagen={perro_bienvenida}
-          onVerDetalles={() => navigate('/carnet', { state: { id: m.id } })}
+          onVerDetalles={() => navigate('/carnet', { state: { id: m.id_mascota } })}
         />
       ))}
     </div>
@@ -200,18 +202,23 @@ function App() {
             Cerrar Sesión
           </button>
         </div>
-        <div className="navbar">
-          <ul>
+        <div className="navbar-mascotas">
+          <ul className="lista-navbar">
 
-            <button className='btn' onClick={()=> navigate('/')}>Home</button>
+            <button className='btn btn-navbar' onClick={()=> navigate('/')}>Home</button>
             {tieneAlgunRol(['Admin', 'Vet']) && (
               <>
-              <button className='btn' onClick={()=> navigate('/mascota/registrar')}>Agregar Mascota</button>
-              <button className='btn' onClick={()=> navigate('/mascota/crud')}>Gestor de Mascotas</button>
+              <button className='btn btn-navbar' onClick={()=> navigate('/mascota/registrar')}>Agregar Mascota</button>
+              <button className='btn btn-navbar' onClick={()=> navigate('/mascota/crud')}>Gestor de Mascotas</button>
               </>
             )} 
+            {tieneAlgunRol(['Admin']) && (
+              <>
+              <button className='btn btn-navbar' onClick={()=> navigate('/usuario/crud')}>Gestor de Usuarios</button>
+              </>
+            )}
             {tieneAlgunRol(['Admin', 'Owner']) && (
-            <button className='btn' onClick={()=> navigate('/cita/agendar')}>Agendar Cita</button>
+            <button className='btn btn-navbar' onClick={()=> navigate('/cita/agendar')}>Agendar Cita</button>
             )}
           </ul>
         </div>
@@ -223,6 +230,7 @@ function App() {
           <Route path="/carnet" element={<CarnetMascota />} />
           <Route path="/mascota/registrar" element={<RegistroMascota />}/>
           <Route path="/mascota/crud" element={<GestorMascotas />}/>
+          <Route path="/usuario/crud" element={<GestorUsuarios />}/>
           <Route path="/cita/agendar" element={<AgendarCitas />}/>
         </Routes>
         </>

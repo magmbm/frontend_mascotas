@@ -3,15 +3,8 @@ import { API_URL } from '../config/Api';
 import { useAuth } from 'react-oidc-context';
 import './GestorMascotas.css'
 import { useNavigate } from 'react-router-dom';
+import type { Mascota } from '../utils/types';
 
-export interface Mascota {
-    id: string | number;
-    nombre: string;
-    edad: number;
-    vacunado: boolean;
-    especie: string;
-    sexo : string;
-}
 
 interface TablaMascotasProps {
   mascotas: Mascota[];
@@ -50,7 +43,7 @@ export const GestorMascotas: React.FC = ({}) => {
     const eliminarMascota= async (id : string | number)=> {
         try {
             const token= auth.user?.access_token;
-            
+            console.log("Delete"); 
             const response= await fetch(`${API_URL}/api/mascotas/eliminar/${id}`, {
                 method : "DELETE",
                 headers : {
@@ -87,19 +80,19 @@ export const GestorMascotas: React.FC = ({}) => {
                 <tbody>
                 {mascotas.length > 0 ? (
                     mascotas.map((m) => (
-                    <tr key={m.id}>
-                        <td>{m.id}</td>
-                        <td><strong>{m.nombre}</strong></td>
-                        <td>{m.edad} {m.edad === 1 ? 'año' : 'años'}</td>
+                    <tr key={m.id_mascota}>
+                        <td>{m.id_mascota}</td>
+                        <td><strong>{m.nombre_mascota}</strong></td>
+                        <td>{m.edad_mascota} {m.edad_mascota === 1 ? 'año' : 'años'}</td>
                         <td>{m.especie}</td>
                         <td>
                         <span className={`badge ${m.vacunado ? 'badge-success' : 'badge-danger'}`}>
                             {m.vacunado ? 'Sí' : 'No'}
                         </span>
                         </td>
-                        <td><button className='btn' onClick={()=> navigate('/carnet', { state : { id : m.id }})}>Ver más</button></td>
+                        <td><button className='btn' onClick={()=> navigate('/carnet', { state : { id : m.id_mascota }})}>Ver más</button></td>
                         {roles.includes("Admin") && 
-                        <td><button className='btn btn_basurero' onClick={()=> eliminarMascota(m.id)} ><img src="https://cdn-icons-png.flaticon.com/512/4812/4812459.png" className='basurero_icon'/></button></td>
+                        <td><button className='btn btn_basurero' onClick={()=> eliminarMascota(m.id_mascota)} ><img src="https://cdn-icons-png.flaticon.com/512/4812/4812459.png" className='basurero_icon'/></button></td>
                         }
                     </tr>
                     ))
