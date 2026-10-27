@@ -139,23 +139,6 @@ function App() {
   const roles = (auth.user?.profile["cognito:groups"] as string[]) || [];
   const [verificandoUsuario, setVerificandoUsuario] = useState(true);
 
-  const lambda_test= async ()=> {
-    try {
-      const response= await fetch(`${API_URL}/api/mascotas/lambda`, {
-        method : "GET",
-        headers : {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        }
-      })
-      const data= await response.json();
-      console.log(data);
-      console.log("Lambda");
-    } catch (err : any) {
-      console.log(err);
-    }
-  } 
-
   const registrarUsuario = async (email : string) => {
     try {
       if (email== "" || email== undefined) return false;
@@ -171,9 +154,8 @@ function App() {
       const data = await response.json();
       console.log("Datos");
       console.log(data);
-      // El backend responde { registrado: true | false }.
-      // Ojo: un objeto siempre es truthy, hay que revisar la propiedad.
-      return data === true || data?.registrado === true;
+      if (!data) return false;
+      return true;
     } catch (err : any) {
       console.log(err);
       return false;

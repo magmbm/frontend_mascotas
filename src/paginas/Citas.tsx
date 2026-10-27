@@ -106,13 +106,14 @@ export const AgendarCitas: React.FC = () => {
                 fecha_hora_cita: `${anio}-${mes}-${diaMes}T${hora}:00`,
                 motivo_cita: motivo,
                 nombre_mascota: nombreMascota.trim(),
-                especia_mascota: especie,
+                especie_mascota: especie,
                 fk_owner: idUsuario,
                 fk_vet: 1, // pendiente: se definirá en la BD
             };
 
             // El backend recibe Map<String, String>: el JSON de la cita va serializado
             // dentro de "mensaje" y la Lambda lo desenvuelve y valida.
+            console.log(cita);
             const response = await fetch(`${API_URL}/api/citas/registrar`, {
                 method: "POST",
                 headers: {
@@ -123,7 +124,8 @@ export const AgendarCitas: React.FC = () => {
                     asunto: `Solicitud de cita - ${motivo}`,
                     mensaje: JSON.stringify(cita),
                 }),
-            });
+            }
+            );
 
             if (!response.ok) {
                 throw new Error(`Error ${response.status}: ${response.statusText}`);
