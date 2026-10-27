@@ -8,7 +8,9 @@ import { AgendarCitas } from './paginas/Citas';
 import { RegistroMascota } from './paginas/RegistroMascota';
 import { GestorMascotas } from './paginas/GestorMascotas';
 import { GestorUsuarios } from './paginas/GestorUsuarios';
+import { RegistroUsuario } from './paginas/RegistroUsuario';
 import { API_URL } from './config/Api';
+import { resolverIdUsuario } from './utils/usuarioStorage';
 import type { Mascota } from './utils/types';
 
 interface TarjetaProps {
@@ -135,6 +137,7 @@ function App() {
   const auth = useAuth();
   const token= auth.user?.access_token;
   const roles = (auth.user?.profile["cognito:groups"] as string[]) || [];
+  const [verificandoUsuario, setVerificandoUsuario] = useState(true);
 
   const lambda_test= async ()=> {
     try {
@@ -153,13 +156,44 @@ function App() {
     }
   } 
 
-  const handleCerrarSesion = async ()  => {
-    await auth.signoutRedirect();
+  const registrarUsuario = async (email : string) => {
+    try {
+      if (email== "" || email== undefined) return false;
+      const response= await fetch(`${API_URL}/api/usuarios/registrado`, {
+        method : "GET",
+        headers : {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "email_usuario" : email
+        }
+      })
+      if (!response.ok) return false;
+      const data = await response.json();
+      console.log("Datos");
+      console.log(data);
+      // El backend responde { registrado: true | false }.
+      // Ojo: un objeto siempre es truthy, hay que revisar la propiedad.
+      return data === true || data?.registrado === true;
+    } catch (err : any) {
+      console.log(err);
+      return false;
+    }
+  }
 
-    const cognitoDomain = "https://us-east-1qmdhsiox2.auth.us-east-1.amazoncognito.com";
-    const clientId = "55hsp4g2da2n0g262v5bphgsj5";
-    const logoutUri = "http://localhost:5173";
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
+  const handleCerrarSesion = async () => {
+    try {
+      // signoutRedirect usa el end_session_endpoint que ya viene en la
+      // configuración OIDC (main.tsx) y elimina la sesión local.
+      // Cognito espera el parámetro "logout_uri", no "post_logout_redirect_uri".
+      await auth.signoutRedirect({
+        extraQueryParams: {
+          client_id: auth.settings.client_id,
+          logout_uri: window.location.origin,
+        },
+      });
+    } catch (err) {
+      console.error("Error al cerrar sesión:", err);
+    }
   };
 
   useEffect(() => {
@@ -170,6 +204,50 @@ function App() {
       });
     }
   }, [auth.isLoading, auth.isAuthenticated, auth.activeNavigator, auth.error]);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      setVerificandoUsuario(true);
+      return;
+    }
+
+    let cancelado = false;
+
+    const verificarRegistro = async () => {
+      const email = auth.user?.profile.email;
+
+      if (!email) {
+        setVerificandoUsuario(false);
+        return;
+      }
+
+      const registrado = await registrarUsuario(email);
+
+      if (cancelado) return;
+
+      if (registrado) {
+        // Usuario ya registrado: obtenemos su id_usuario y lo guardamos
+        // en localStorage para usarlo luego como fk_owner al agendar.
+        await resolverIdUsuario(token, email);
+
+        if (cancelado) return;
+      }
+
+      setVerificandoUsuario(false);
+
+      if (!registrado) {
+        console.log("Pasamos esta barrera");
+        navigate('/usuario/registrar');
+      }
+    };
+
+    verificarRegistro();
+
+    return () => {
+      cancelado = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.isAuthenticated, auth.user?.profile.email]);
 
   if (auth.isLoading) {
     return(
@@ -188,10 +266,20 @@ function App() {
       return rolesRequeridos.some((rol) => roles.includes(rol));
     };
 
+  if (auth.isAuthenticated && verificandoUsuario) {
+    return (
+      <div>
+        <h3>Verificando usuario...</h3>
+      </div>
+    )
+  }
+
   if (auth.isAuthenticated) {
     console.log("Access Token");
     console.log(auth.user?.profile);
-    console.log(auth.user?.access_token);
+
+    console.log("Pablo");
+    
     return (
       <>
         <div className="header">
@@ -231,6 +319,7 @@ function App() {
           <Route path="/mascota/registrar" element={<RegistroMascota />}/>
           <Route path="/mascota/crud" element={<GestorMascotas />}/>
           <Route path="/usuario/crud" element={<GestorUsuarios />}/>
+          <Route path="/usuario/registrar" element={<RegistroUsuario />}/>
           <Route path="/cita/agendar" element={<AgendarCitas />}/>
         </Routes>
         </>

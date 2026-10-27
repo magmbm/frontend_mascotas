@@ -1,0 +1,161 @@
+.registro-usuario-cont {
+    align-self: center;
+    background-color: beige;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 1.5em 1.5em 2em;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.registro-usuario-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.registro-usuario-cont .titulo {
+    font-weight: 700;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.registro-subtitulo {
+    margin: 0 0 1em 0;
+    color: #555;
+}
+
+.registro-cuenta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    background-color: white;
+    border-radius: 10px;
+    padding: 0.8em 1em;
+    margin-bottom: 1em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.registro-cuenta-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+
+.registro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.registro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}
+
+.registro-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.registro-card-completo {
+    grid-column: span 2;
+}
+
+.registro-card label {
+    font-weight: 600;
+    color: #111827;
+}
+
+.registro-card input {
+    width: 100%;
+    padding: 0.6em 0.8em;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    box-sizing: border-box;
+    background-color: #f9fafb;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.registro-card input:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.registro-ayuda {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.registro-error {
+    margin: 0;
+    padding: 0.7em 1em;
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    color: #b91c1c;
+    font-weight: 600;
+}
+
+.registro-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5em;
+}
+
+.btn-registro {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.8em 1.8em;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+}
+
+.btn-registro:hover:not(:disabled) {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+.btn-registro:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .registro-usuario-cont {
+        width: 95%;
+        padding: 1.2em 1em 1.5em;
+    }
+
+    .registro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .registro-card-completo {
+        grid-column: span 1;
+    }
+
+    .registro-actions {
+        justify-content: stretch;
+    }
+
+    .btn-registro {
+        width: 100%;
+    }
+}

@@ -69,7 +69,7 @@ export const GestorUsuarios: React.FC = ({}) => {
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
+                    <th>Nombre y apellidos</th>
                     <th>Email</th>
                     <th>RUN</th>
                     <th>Vacunado</th>
@@ -82,7 +82,7 @@ export const GestorUsuarios: React.FC = ({}) => {
                     usuarios.map((m) => (
                     <tr key={m.id_usuario}>
                         <td>{m.id_usuario}</td>
-                        <td><strong>{m.nombre_usuario}</strong></td>
+                        <td><strong>{m.nombre_usuario} {m.papellido_usuario} {m.sapellido_usuario}</strong></td>
                         <td>{m.email_usuario} </td>
                         <td>{m.numrun_usuario}- {m.dvrun_usuario}</td>
                         <td>
