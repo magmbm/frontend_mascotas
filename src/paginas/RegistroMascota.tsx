@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../config/Api';
 import { useAuth } from 'react-oidc-context';
-import { campoFaltante, camposPorRellenar, registroFallidoMascota } from '../utils/MensajesError';
+import {  camposPorRellenar, registroFallidoMascota } from '../utils/MensajesError';
 
 export const RegistroMascota: React.FC = () => {
     const auth= useAuth();

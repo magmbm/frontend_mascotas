@@ -28,7 +28,6 @@ export const MascotaCard = ({
   especie,
   edad,
   vacunado,
-  imagen,
   onVerDetalles
 }: TarjetaProps) => {
   return (

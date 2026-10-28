@@ -2,20 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { API_URL } from '../config/Api';
 import { useAuth } from 'react-oidc-context';
 import './GestorCitas.css'
-import { useNavigate } from 'react-router-dom';
-import type { Cita, Usuario } from '../utils/types';
+import type { Cita } from '../utils/types';
 
 
-interface TablaCitasProps {
-  citas: Cita[];
-}
 
 export const GestorCitas: React.FC = ({}) => {
     const [citas, setCitas]= useState<Cita[]>([]);
-    const [eliminar, setEliminar]= useState(false);
+    let eliminar;
     const auth= useAuth();
-    const roles = (auth.user?.profile["cognito:groups"] as string[]) || [];
-    const navigate= useNavigate();
+    //const roles = (auth.user?.profile["cognito:groups"] as string[]) || [];
+    //const navigate= useNavigate();
 
     const listarCitas= async ()=> {
         try {
@@ -41,6 +37,7 @@ export const GestorCitas: React.FC = ({}) => {
         listarCitas();
     }, [eliminar]);
 
+    /*
     const eliminarUsuario= async (id : string | number)=> {
         try {
             const token= auth.user?.access_token;
@@ -51,7 +48,7 @@ export const GestorCitas: React.FC = ({}) => {
                     Authorization: `Bearer ${token}`,
                 }
             })
-
+            
             if (response.status== 200) {
                 setEliminar(!eliminar);
                 alert("Usuario Eliminado con éxito");
@@ -60,6 +57,7 @@ export const GestorCitas: React.FC = ({}) => {
             alert("No se pudo eliminar el registro")
         }
     }
+    */ 
 
     return (
     <div className="">

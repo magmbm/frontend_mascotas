@@ -6,9 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import type { Mascota } from '../utils/types';
 
 
-interface TablaMascotasProps {
-  mascotas: Mascota[];
-}
 
 export const GestorMascotas: React.FC = ({}) => {
     const [mascotas, setMascotas]= useState<Mascota[]>([]);

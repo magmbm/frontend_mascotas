@@ -6,9 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import type { Usuario } from '../utils/types';
 
 
-interface TablaUsuariosProps {
-  usuarios: Usuario[];
-}
 
 export const GestorUsuarios: React.FC = ({}) => {
     const [usuarios, setUsuarios]= useState<Usuario[]>([]);

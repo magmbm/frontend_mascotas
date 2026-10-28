@@ -7,12 +7,6 @@ import { useEffect, useState } from "react";
 import perro_bienvenida  from '../assets/perro.png'
 import type { Mascota } from "../utils/types";
 
-interface CarnetProps {
-  nombre: string;
-  especie: string;
-  edad: number;
-  vacunas?: boolean;
-}
 
 
 export const CarnetMascota: any = ({
