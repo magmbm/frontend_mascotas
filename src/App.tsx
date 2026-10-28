@@ -12,6 +12,7 @@ import { RegistroUsuario } from './paginas/RegistroUsuario';
 import { API_URL } from './config/Api';
 import { resolverIdUsuario } from './utils/usuarioStorage';
 import type { Mascota } from './utils/types';
+import { GestorCitas } from './paginas/GestorCitas';
 
 interface TarjetaProps {
   imagen?: string;
@@ -287,6 +288,12 @@ function App() {
               <button className='btn btn-navbar' onClick={()=> navigate('/usuario/crud')}>Gestor de Usuarios</button>
               </>
             )}
+
+            {tieneAlgunRol(['Admin', 'Vet']) && (
+              <>
+              <button className='btn btn-navbar' onClick={()=> navigate('/cita/crud')}>Próximas Citas</button>
+              </>
+            )}
             {tieneAlgunRol(['Admin', 'Owner']) && (
             <button className='btn btn-navbar' onClick={()=> navigate('/cita/agendar')}>Agendar Cita</button>
             )}
@@ -301,6 +308,7 @@ function App() {
           <Route path="/mascota/registrar" element={<RegistroMascota />}/>
           <Route path="/mascota/crud" element={<GestorMascotas />}/>
           <Route path="/usuario/crud" element={<GestorUsuarios />}/>
+          <Route path="/cita/crud" element={<GestorCitas />}/>
           <Route path="/usuario/registrar" element={<RegistroUsuario />}/>
           <Route path="/cita/agendar" element={<AgendarCitas />}/>
         </Routes>
